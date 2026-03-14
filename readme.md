@@ -34,14 +34,6 @@ npm run build
 The `static` directory is copied as-is into the build output, so updates to `static/os` or media assets require only a
 rebuild.
 
-## Environment Variables
-
-The contact endpoint (`server/index.ts`) expects the following values:
-
-- `FOLIO_EMAIL` – Gmail/SMTP username used to send portfolio emails.
-- `FOLIO_PASSWORD` – Corresponding app password or SMTP secret.
-- `FOLIO_NOTIFICATION_EMAILS` (optional) – Comma-separated list of recipients. Defaults to Sean's inbox.
-
 ## Contact
 
 Questions, collaboration ideas, or opportunities? Reach out at
