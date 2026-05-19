@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean Pereira · Showcase 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="desktop-shell">
+        <div class="desktop-icons">
+            <button type="button" class="desktop-icon" data-go-tab="about" aria-label="Open portfolio details">
+                <span class="desktop-icon__glyph" aria-hidden="true">SP</span>
+                <span class="desktop-icon__label">My Portfolio</span>
+            </button>
+        </div>
+        <div class="window window--hidden" aria-hidden="true">
+            <div class="window-bar">
+                <div class="window-bar__left">
+                    <span class="window-icon">SP</span>
+                    <span class="window-title">Sean Pereira – Showcase 2026</span>
+                </div>
+                <div class="window-controls">
+                    <span>_</span>
+                    <span>□</span>
+                    <span>✕</span>
+                </div>
+            </div>
+            <div class="window-inner">
+                <div class="hero">
+                    <h1>Sean Pereira</h1>
+                    <div class="hero-actions">
+                        <button type="button" class="hero-action" data-go-tab="about">About</button>
+                        <button type="button" class="hero-action" data-go-tab="projects">Projects</button>
+                        <button type="button" class="hero-action" data-go-tab="skills">Skills</button>
+                        <button type="button" class="hero-action" data-go-tab="achievements">Achievements &amp; Certifications</button>
+                        <button type="button" class="hero-action" data-go-tab="contact">Contact</button>
+                        <button type="button" class="hero-action hero-action--primary" data-resume="../seanResume.pdf">Download Resume</button>
+                    </div>
+                </div>
+                <nav class="tabs tabs--hidden" role="tablist" aria-hidden="true">
+                    <button type="button" class="tab active" data-tab="about" role="tab" aria-selected="true">ABOUT</button>
+                    <button type="button" class="tab" data-tab="experience" role="tab" aria-selected="false">EXPERIENCE</button>
+                    <button type="button" class="tab" data-tab="projects" role="tab" aria-selected="false">PROJECTS</button>
+                    <button type="button" class="tab" data-tab="skills" role="tab" aria-selected="false">SKILLS</button>
+                    <button type="button" class="tab" data-tab="achievements" role="tab" aria-selected="false">ACHIEVEMENTS &amp; CERTIFICATIONS</button>
+                    <button type="button" class="tab" data-tab="contact" role="tab" aria-selected="false">CONTACT</button>
+                </nav>
+                <section class="panel-group">
+                    <article class="panel active" data-panel="about" role="tabpanel">
+                        <p>
+                            Innovative full-stack developer and ML engineer with a strong research foundation in AI/ML
+                            optimization, scalable system architecture, and algorithm development. Passionate about contributing
+                            to cutting-edge research and emerging technologies with a focus on performance optimization and
+                            production-grade delivery.
+                        </p>
+                        <ul>
+                            <li><span>Education</span> CRCE (B.E. 2027, CGPA 8.68/10) · SVP Junior College (HSC 71.17%) · St. Francis School (ICSE 97.5%).</li>
+                            <li><span>Focus</span> RAG-backed ML systems, resilient backend services, and research-driven product builds.</li>
+                            <li><span>Strengths</span> Performance tuning, system design, and shipping AI-first applications end-to-end.</li>
+                        </ul>
+                    </article>
+
+                    <article class="panel" data-panel="experience" role="tabpanel">
+                        <div class="list-block">
+                            <h3>E-Cell IIT Guwahati · Technical Trainee</h3>
+                            <p class="meta">Feb 2024 – Mar 2024</p>
+                            <ul>
+                                <li>Completed intensive training in backend architecture, scalable web system design, and AI/ML applications.</li>
+                                <li>Helped improve digital presence for businesses, boosting engagement by 50%+ and revenue by 15%.</li>
+                            </ul>
+                        </div>
+                        <div class="list-block">
+                            <h3>Codelabs CRCE · Documentation Head</h3>
+                            <p class="meta">Mar 2024 – Mar 2025</p>
+                            <ul>
+                                <li>Organized coding contests and seminars while coordinating design and backend teams.</li>
+                                <li>Led placement prep sessions for 150+ students and streamlined event workflows.</li>
+                                <li>Co-designed session content with industry mentors to connect experts and students.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel" data-panel="projects" role="tabpanel">
+                        <div class="project">
+                            <h3>CancerCare AI</h3>
+                            <p class="meta">React · Python · FastAPI · RAG · FAISS · PostgreSQL</p>
+                            <p>RAG-powered oncology support platform with hallucination-resistant responses and LLM-as-a-judge safety
+                                evaluation framework.</p>
+                        </div>
+                        <div class="project">
+                            <h3>
+                                <a href="https://github.com/Sean-Pereira-945/DrCropper.ai" target="_blank" rel="noreferrer">DrCropper.ai</a>
+                            </h3>
+                            <p class="meta">Python · CNN · Flask · MongoDB</p>
+                            <p>94% accurate crop health recommender blending soil imagery diagnostics with a farmer-facing support
+                                chatbot.</p>
+                        </div>
+                        <div class="project">
+                            <h3>
+                                <a href="https://llc-fr-crce-ng3m.vercel.app/" target="_blank" rel="noreferrer">LLC@FRCRCE</a>
+                            </h3>
+                            <p class="meta">Node.js · Express · React · MongoDB</p>
+                            <p>Full-stack course management suite for 500+ students featuring JWT-secured dual interfaces, assignment
+                                workflows, and live enrollment analytics.</p>
+                        </div>
+                        <div class="project">
+                            <h3>
+                                <a href="https://github.com/Sean-Pereira-945/Springboot-project" target="_blank" rel="noreferrer">Beverage Master</a>
+                            </h3>
+                            <p class="meta">Spring Boot · Hibernate · MySQL</p>
+                            <p>Modular service layer with role-based auth, reusable REST templates, and database migrations built for
+                                rapid enterprise prototyping.</p>
+                        </div>
+                    </article>
+
+                    <article class="panel" data-panel="skills" role="tabpanel">
+                        <div class="list-block">
+                            <h3>Skills Snapshot</h3>
+                            <ul>
+                                <li>Languages · Python, JavaScript, Java, C, SQL.</li>
+                                <li>Frontend · React, HTML, CSS, JavaScript.</li>
+                                <li>AI/ML · TensorFlow, scikit-learn, NLP (NLTK, spaCy), RAG.</li>
+                                <li>Backend · FastAPI, Flask, Node.js, Express, Spring Boot.</li>
+                                <li>Databases · PostgreSQL, MongoDB, MySQL.</li>
+                                <li>Tools · Git/GitHub, Docker, AWS, Google Cloud, Jupyter, Colab, Figma, PowerBI, Vercel, Linux.</li>
+                                <li>Soft Skills · Problem-Solving, Team Collaboration, Technical Communication, Leadership, Adaptability.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel" data-panel="achievements" role="tabpanel">
+                        <div class="list-block">
+                            <h3>Achievements</h3>
+                            <ul>
+                                <li>Cleared GATE CSE 2026.</li>
+                                <li><a href="https://drive.google.com/file/d/11pSRG3c1Tjr3T4N2wtT79Tegv2B0kGzp/view?usp=drive_link" target="_blank" rel="noreferrer">3rd Place · Hackathon 3.0 · IES College of Management &amp; Research (2025)</a>.</li>
+                                <li><a href="https://drive.google.com/file/d/1hCLxsFkaDcMo6NN77GS6dJ5vDvYQ3azv/view?usp=drive_link" target="_blank" rel="noreferrer">Represented college at Avishkar Intercollege Research Convention</a>.</li>
+                            </ul>
+                        </div>
+                        <div class="list-block">
+                            <h3>Certifications</h3>
+                            <ul>
+                                <li><a href="https://drive.google.com/file/d/1H5ZivNqKaIhlhxDbtdLBS1KPMYsGrjKc/view?usp=drive_link" target="_blank" rel="noreferrer">Google Cloud Engineer</a> · Google Skills.</li>
+                                <li><a href="https://drive.google.com/file/d/1whErPAg0Yc8hC8cgExUQUNak6QG7YnKg/view?usp=drive_link" target="_blank" rel="noreferrer">AWS Cloud Practitioner</a> · AWS Academy.</li>
+                                <li><a href="https://drive.google.com/file/d/1rYJBBgsdmptcyaApNxX__UjkidYxTQFB/view?usp=drive_link" target="_blank" rel="noreferrer">Neural Network for NLP and CV (Elite + Gold)</a> · IIT Guwahati (NPTEL).</li>
+                                <li><a href="https://drive.google.com/file/d/1QAqPRqRFT1dBUFZ4hqtvhLz-MOLaZpt9/view?usp=drive_link" target="_blank" rel="noreferrer">AI for Management (Elite + Silver)</a> · IIT Madras (NPTEL).</li>
+                                <li><a href="https://drive.google.com/file/d/1wR7x_c237ZHFLJ1mYBpUMiK9f85khRYV/view?usp=drive_link" target="_blank" rel="noreferrer">Data Analytics with Python (Elite)</a> · IIT Roorkee (NPTEL).</li>
+                                <li><a href="https://drive.google.com/file/d/1Bpd10AjVi-xEdSK7nRLjp7LfFTdklWiG/view?usp=drive_link" target="_blank" rel="noreferrer">Intellectual Property Rights and Competition Law (Elite)</a> · IIT Kharagpur (NPTEL).</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel" data-panel="contact" role="tabpanel">
+                        <div class="contact-grid">
+                            <div>
+                                <h3>Reach Out</h3>
+                                <ul>
+                                    <li>Email · <a href="mailto:seanpereira945@gmail.com">seanpereira945@gmail.com</a></li>
+                                    <li>Phone · <a href="tel:+919769791773">+91 97697 91773</a></li>
+                                    <li>Location · Mumbai, India</li>
+                                </ul>
+                                <div class="links">
+                                    <a href="https://www.linkedin.com/in/sean-pereira-8aa29b2ab/" target="_blank" rel="noreferrer">LinkedIn</a>
+                                    <a href="https://github.com/Sean-Pereira-945" target="_blank" rel="noreferrer">GitHub</a>
+                                    <a href="../seanResume.pdf" target="_blank" rel="noreferrer">Resume</a>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Collaboration Notes</h3>
+                                <ul>
+                                    <li>Open to AI/ML research partnerships and backend optimization mandates.</li>
+                                    <li>Comfortable presenting findings to leadership &amp; mentoring student teams.</li>
+                                    <li>Blend of research rigor and shipping velocity for AI-first products.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            </div>
+            <div class="window-footer">© 2026 Sean Pereira</div>
+        </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+</body>
+
+</html>
