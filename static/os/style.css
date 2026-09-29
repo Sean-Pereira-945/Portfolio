@@ -287,6 +287,11 @@ button:focus-visible,
 }
 
 .hero-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.3rem;
     border: 2px solid var(--window-border);
     background: transparent;
     color: var(--window-border);
@@ -575,6 +580,7 @@ html.app-mode body {
 
 .app-mode .app-resume {
     display: inline-flex;
+    text-decoration: none;
     align-items: center;
     flex: 0 0 auto;
     min-height: 36px;

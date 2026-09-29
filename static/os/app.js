@@ -91,15 +91,6 @@ document.querySelectorAll('[data-window]').forEach((button) => {
     });
 });
 
-document.querySelectorAll('[data-resume]').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-        const url = trigger.getAttribute('data-resume');
-        if (url) {
-            window.open(url, '_blank');
-        }
-    });
-});
-
 // ---- Phone app layout ----
 // Each bottom tab shows one or more of the existing panels, stacked.
 const APP_TABS = {
