@@ -1,6 +1,8 @@
 {
     "compilerOptions": {
         "target": "ES6",
+        // Browser APIs plus the ES2017 library (Object.entries etc.) the code uses.
+        "lib": ["DOM", "DOM.Iterable", "ES2017"],
         "moduleResolution": "node",
         "strict": true,
         "paths": {
@@ -11,7 +13,11 @@
         "jsx": "react",
         // Library .d.ts files (e.g. a newer @types/node pulled in by build tools) are
         // written for newer TypeScript than this project uses; only check our own code.
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        // Browser app: don't auto-load every @types package (build tools pull in
+        // @types/node, whose newest versions use syntax TypeScript 4.9 can't parse).
+        // Packages we import still bring their own types.
+        "types": []
     },
 
     "include": ["Application/*", "./*"]
