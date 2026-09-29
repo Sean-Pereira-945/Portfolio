@@ -7,3 +7,6 @@ They were moved here (with `git mv`, so history is kept) to shrink the deploy.
   They are only used when `SCREEN_FILTERS_ENABLED` is `true` in `src/Application/World/MonitorScreen.ts`.
   To turn the effects back on, move these back into `static/textures/monitor/` and add the video elements they need.
 - `audio/radio/*`, `audio/computer/idle*.wav`, `audio/atmosphere/office.ogg`: not referenced in `src/Application/sources.ts`.
+- `draco/`: Draco decoder/encoder. The `.glb` models are not Draco-compressed and no `DRACOLoader` is set up.
+- `textures/environmentMap/*`: cube map not referenced in `src/Application/sources.ts`.
+- `models/Decor/baked_decor.jpg`: superseded by `baked_decor_modified.jpg`.

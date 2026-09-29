@@ -9,7 +9,10 @@
         "strictPropertyInitialization": false,
         "allowSyntheticDefaultImports": true,
         "jsx": "react",
+        // Library .d.ts files (e.g. a newer @types/node pulled in by build tools) are
+        // written for newer TypeScript than this project uses; only check our own code.
+        "skipLibCheck": true
     },
-    
-    "include": ["Application/*", "./*"],
+
+    "include": ["Application/*", "./*"]
 }

@@ -11,6 +11,14 @@ module.exports = {
         path: path.resolve(__dirname, '../public'),
     },
     devtool: 'source-map',
+    performance: {
+        // Models, textures and audio are fetched at runtime behind the loading
+        // screen, so only budget the JS/CSS the page needs to start.
+        assetFilter: (assetFilename) => /\.(js|css)$/.test(assetFilename),
+        // three.js + React alone are ~800 KiB minified; warn if the bundle grows past 1 MiB.
+        maxAssetSize: 1024 * 1024,
+        maxEntrypointSize: 1024 * 1024,
+    },
     plugins: [
         new CopyWebpackPlugin({
             patterns: [{ from: path.resolve(__dirname, '../static') }],
