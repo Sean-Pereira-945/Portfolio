@@ -1,5 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import eventBus from '../EventBus';
+import { prefersReducedMotion } from '../Animation';
+import { isPhoneMode } from '../../Utils/Device';
+
+// The in-monitor SeanOS page also works on its own, without WebGL.
+const LIGHTWEIGHT_URL = './os/index.html';
 
 type LoadingProps = {};
 
@@ -20,16 +25,15 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     const [counter, setCounter] = useState(0);
     const [resources] = useState<string[]>([]);
     const [mobileWarning, setMobileWarning] = useState(window.innerWidth < 768);
+    const startedRef = useRef(false);
+    const startButtonRef = useRef<HTMLButtonElement>(null);
+    const reducedMotion = prefersReducedMotion();
 
-    const onResize = () => {
-        if (window.innerWidth < 768) {
-            setMobileWarning(true);
-        } else {
-            setMobileWarning(false);
-        }
-    };
-
-    window.addEventListener('resize', onResize);
+    useEffect(() => {
+        const onResize = () => setMobileWarning(window.innerWidth < 768);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -85,6 +89,8 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     }, [webGLError]);
 
     const start = useCallback(() => {
+        if (startedRef.current) return;
+        startedRef.current = true;
         setLoadingOverlayOpacity(0);
         eventBus.dispatch('loadingScreenDone', {});
         const ui = document.getElementById('ui');
@@ -92,6 +98,20 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
             ui.style.pointerEvents = 'none';
         }
     }, []);
+
+    useEffect(() => {
+        if (startPopupOpacity !== 1) return;
+        startButtonRef.current?.focus();
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (startedRef.current) return;
+            if (event.key === 'Enter' || event.key === 'Escape') {
+                event.preventDefault();
+                start();
+            }
+        };
+        document.addEventListener('keydown', onKeyDown);
+        return () => document.removeEventListener('keydown', onKeyDown);
+    }, [startPopupOpacity, start]);
 
     const getSpace = (sourceName: string) => {
         let spaces = '';
@@ -128,7 +148,11 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
         <div
             style={Object.assign({}, styles.overlay, {
                 opacity: overlayOpacity,
-                transform: `scale(${overlayOpacity === 0 ? 1.1 : 1})`,
+                transform: `scale(${
+                    overlayOpacity === 0 && !reducedMotion ? 1.1 : 1
+                })`,
+                // Once faded out, take the overlay (and its START button) out of the tab order.
+                visibility: overlayOpacity === 0 ? 'hidden' : 'visible',
             })}
         >
             {startPopupOpacity === 0 && loadingTextOpacity === 0 && (
@@ -156,7 +180,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                                 </p>
                             </div>
                         </div>
-                        <div style={styles.headerInfo}>
+                        <div className="loading-screen-header-info">
                             <p>Released: 05/01/2027</p>
                             <p>SPBIOS (C)2026 Pereira Signal Labs,</p>
                         </div>
@@ -208,8 +232,8 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                         className="loading-screen-footer"
                     >
                         <p>
-                            Press <b>DEL</b> to enter SETUP , <b>ESC</b> to skip
-                            memory test
+                            Press <b>ENTER</b> or <b>ESC</b> to boot once
+                            loading completes
                         </p>
                         <p>{getCurrentDate()}</p>
                     </div>
@@ -228,7 +252,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                     <div style={styles.spacer} />
                     <div style={styles.spacer} /> */}
                     <p>Sean Pereira Immersive Portfolio 2026</p>
-                    {mobileWarning && (
+                    {mobileWarning && !isPhoneMode && (
                         <>
                             <br />
                             <b>
@@ -239,11 +263,31 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                                     a desktop or laptop computer.
                                 </p>
                             </b>
+                            <p>
+                                On a phone?{' '}
+                                <a href={LIGHTWEIGHT_URL} style={styles.link}>
+                                    Open the lightweight version
+                                </a>
+                            </p>
+                            <br />
+                        </>
+                    )}
+                    {isPhoneMode && (
+                        <>
+                            <p>
+                                Prefer a lighter page?{' '}
+                                <a href={LIGHTWEIGHT_URL} style={styles.link}>
+                                    Open the plain version
+                                </a>
+                            </p>
                             <br />
                         </>
                     )}
                     <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-                        <p>Click start to begin{'\xa0'}</p>
+                        <p>
+                            {isPhoneMode ? 'Tap' : 'Click'} start to begin
+                            {'\xa0'}
+                        </p>
                         <span className="blinking-cursor" />
                     </div>
                     <div
@@ -254,9 +298,15 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             marginTop: '16px',
                         }}
                     >
-                        <div className="bios-start-button" onClick={start}>
+                        <button
+                            type="button"
+                            className="bios-start-button"
+                            onClick={start}
+                            ref={startButtonRef}
+                            tabIndex={startPopupOpacity === 1 ? 0 : -1}
+                        >
                             <p>START</p>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -268,7 +318,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                 >
                     <div style={styles.startPopup}>
                         <p>
-                            <b style={{ color: 'red' }}>CRITICAL ERROR:</b> No
+                            <b style={styles.red}>CRITICAL ERROR:</b> No
                             WebGL Detected
                         </p>
                         <div style={styles.spacer} />
@@ -277,7 +327,11 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                         <p>WebGL is required to run this site.</p>
                         <p>
                             Please enable it or switch to a browser which
-                            supports WebGL
+                            supports WebGL, or{' '}
+                            <a href={LIGHTWEIGHT_URL} style={styles.link}>
+                                open the lightweight version
+                            </a>
+                            .
                         </p>
                     </div>
                 </div>
@@ -288,21 +342,13 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
 
 const styles: StyleSheetCSS = {
     overlay: {
-        backgroundColor: 'black',
+        backgroundColor: 'var(--bios-bg)',
         width: '100%',
         height: '100%',
         display: 'flex',
-        transition: 'opacity 0.2s, transform 0.2s',
-        MozTransition: 'opacity 0.2s, transform 0.2s',
-        WebkitTransition: 'opacity 0.2s, transform 0.2s',
-        OTransition: 'opacity 0.2s, transform 0.2s',
-        msTransition: 'opacity 0.2s, transform 0.2s',
+        transition: 'opacity 0.2s, transform 0.2s, visibility 0s 0.2s',
 
         transitionTimingFunction: 'ease-in-out',
-        MozTransitionTimingFunction: 'ease-in-out',
-        WebkitTransitionTimingFunction: 'ease-in-out',
-        OTransitionTimingFunction: 'ease-in-out',
-        msTransitionTimingFunction: 'ease-in-out',
 
         boxSizing: 'border-box',
         fontSize: 16,
@@ -329,7 +375,7 @@ const styles: StyleSheetCSS = {
         alignItems: 'center',
     },
     warning: {
-        color: 'yellow',
+        color: 'var(--bios-warning)',
     },
     blinkingContainer: {
         position: 'absolute',
@@ -342,28 +388,25 @@ const styles: StyleSheetCSS = {
         padding: 48,
     },
     startPopup: {
-        backgroundColor: '#000',
+        backgroundColor: 'var(--bios-bg)',
         padding: 24,
-        border: '7px solid #fff',
+        border: '7px solid var(--bios-fg)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         maxWidth: 500,
         // alignItems: 'center',
     },
-    headerInfo: {
-        marginLeft: 64,
-    },
     green: {
-        color: '#00ff00',
+        color: 'var(--bios-green)',
     },
     red: {
-        color: '#00ff00',
+        color: 'var(--bios-error)',
     },
     link: {
-        // textDecoration: 'none',
-        color: '#4598ff',
+        color: 'var(--bios-link)',
         cursor: 'pointer',
+        textUnderlineOffset: '0.2em',
     },
     overlayText: {
         width: '100%',
@@ -388,12 +431,6 @@ const styles: StyleSheetCSS = {
         paddingLeft: 32,
         paddingBottom: 32,
         flexDirection: 'column',
-    },
-    logoImage: {
-        width: 64,
-        height: 42,
-        imageRendering: 'pixelated',
-        marginRight: 16,
     },
     footer: {
         boxSizing: 'border-box',

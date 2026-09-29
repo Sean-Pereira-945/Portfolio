@@ -96,4 +96,9 @@ const sources: Resource[] = [
     },
 ];
 
+// Phone mode has no desk scene, so it skips the models and textures.
+export const phoneSources: Resource[] = sources.filter(
+    (source) => source.type === 'audio'
+);
+
 export default sources;

@@ -207,6 +207,8 @@ export default class MonitorScreen extends EventEmitter {
         iframe.id = 'computer-screen';
         iframe.frameBorder = '0';
         iframe.title = 'SeanOS';
+        // Reached through the "Open SeanOS" control, not by tabbing past it unzoomed.
+        iframe.tabIndex = -1;
 
         // Add iframe to container
         container.appendChild(iframe);

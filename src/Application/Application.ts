@@ -9,9 +9,11 @@ import Mouse from './Utils/Mouse';
 
 //@ts-ignore
 import World from './World/World';
+import PhoneWorld from './World/PhoneWorld';
+import { isPhoneMode } from './Utils/Device';
 import Resources from './Utils/Resources';
 
-import sources from './sources';
+import sources, { phoneSources } from './sources';
 
 import Stats from 'stats.js';
 import Loading from './Utils/Loading';
@@ -30,7 +32,7 @@ export default class Application {
     resources: Resources;
     camera: Camera;
     renderer: Renderer;
-    world: World;
+    world: World | PhoneWorld;
     mouse: Mouse;
     loading: Loading;
     ui: UI;
@@ -57,11 +59,12 @@ export default class Application {
         this.scene = new THREE.Scene();
         this.cssScene = new THREE.Scene();
         this.overlayScene = new THREE.Scene();
-        this.resources = new Resources(sources);
+        if (isPhoneMode) document.body.classList.add('phone-mode');
+        this.resources = new Resources(isPhoneMode ? phoneSources : sources);
         this.camera = new Camera();
         this.renderer = new Renderer();
         this.camera.createControls();
-        this.world = new World();
+        this.world = isPhoneMode ? new PhoneWorld() : new World();
 
         this.ui = new UI();
 

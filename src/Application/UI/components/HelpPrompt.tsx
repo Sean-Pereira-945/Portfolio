@@ -2,8 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 // import eventBus from '../EventBus';
 import { motion } from 'framer-motion';
 import UIEventBus from '../EventBus';
+import { prefersReducedMotion } from '../Animation';
 
-const HELP_TEXT = 'Click anywhere to begin';
+import { isPhoneMode } from '../../Utils/Device';
+
+const HELP_TEXT = isPhoneMode
+    ? 'Drag around the phone to spin it'
+    : 'Click anywhere to begin';
 
 type HelpPromptProps = {};
 
@@ -29,15 +34,20 @@ const HelpPrompt: React.FC<HelpPromptProps> = () => {
     // make a document listener to listen to clicks
 
     useEffect(() => {
-        setTimeout(() => {
-            typeHelpText(0, '');
-        }, 500);
-        document.addEventListener('mousedown', () => {
-            setVisible(false);
-        });
+        if (prefersReducedMotion()) {
+            setHelpText(HELP_TEXT);
+        } else {
+            setTimeout(() => {
+                typeHelpText(0, '');
+            }, 500);
+        }
+        const hide = () => setVisible(false);
+        document.addEventListener('mousedown', hide);
+        document.addEventListener('keydown', hide);
         UIEventBus.on('enterMonitor', () => {
             setVisible(false);
         });
+        UIEventBus.on('phoneSpin', hide);
     }, []);
 
     useEffect(() => {
@@ -80,8 +90,8 @@ const vars = {
 const styles: StyleSheetCSS = {
     container: {
         position: 'absolute',
-        bottom: 64,
-        background: 'black',
+        bottom: isPhoneMode ? 16 : 64,
+        background: 'var(--bios-bg)',
         padding: 4,
         paddingLeft: 16,
         paddingRight: 16,

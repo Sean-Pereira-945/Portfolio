@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import FreeCamToggle from './FreeCamToggle';
 import MuteToggle from './MuteToggle';
+import UIEventBus from '../EventBus';
+import { prefersReducedMotion } from '../Animation';
 
 interface InfoOverlayProps {
     visible: boolean;
@@ -57,34 +59,42 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
 
     useEffect(() => {
         if (visible && nameText == '') {
-            setTimeout(() => {
-                typeText(0, '', NAME_TEXT, setNameText, () => {
-                    typeText(0, '', TITLE_TEXT, setTitleText, () => {
-                        typeText(
-                            0,
-                            '',
-                            time,
-                            setTimeText,
-                            () => {
-                                setTextDone(true);
-                            },
-                            timeRef
-                        );
+            if (prefersReducedMotion()) {
+                setNameText(NAME_TEXT);
+                setTitleText(TITLE_TEXT);
+                setTimeText(timeRef.current);
+                setTextDone(true);
+            } else {
+                setTimeout(() => {
+                    typeText(0, '', NAME_TEXT, setNameText, () => {
+                        typeText(0, '', TITLE_TEXT, setTitleText, () => {
+                            typeText(
+                                0,
+                                '',
+                                time,
+                                setTimeText,
+                                () => {
+                                    setTextDone(true);
+                                },
+                                timeRef
+                            );
+                        });
                     });
-                });
-            }, 400);
+                }, 400);
+            }
         }
         visRef.current = visible;
     }, [visible]);
 
     useEffect(() => {
         if (textDone) {
+            const stagger = prefersReducedMotion() ? 0 : 250;
             setTimeout(() => {
                 setVolumeVisible(true);
                 setTimeout(() => {
                     setFreeCamVisible(true);
-                }, 250);
-            }, 250);
+                }, stagger);
+            }, stagger);
         }
     }, [textDone]);
 
@@ -124,6 +134,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                             styles.container,
                             styles.lastRowChild
                         )}
+                        className="info-row-item"
                     >
                         <p>{timeText}</p>
                     </div>
@@ -139,18 +150,30 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                     )}
                 </div>
             )}
+            {freeCamVisible && (
+                <button
+                    type="button"
+                    className="bios-text-button info-row-item"
+                    data-ui-control
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => UIEventBus.dispatch('requestEnterMonitor', {})}
+                >
+                    <p>Open SeanOS</p>
+                </button>
+            )}
         </div>
     );
 };
 
 const styles: StyleSheetCSS = {
     container: {
-        background: 'black',
+        background: 'var(--bios-bg)',
         padding: 4,
         paddingLeft: 16,
         paddingRight: 16,
         textAlign: 'center',
         display: 'flex',
+        alignItems: 'center',
         marginBottom: 4,
         boxSizing: 'border-box',
     },
@@ -162,19 +185,14 @@ const styles: StyleSheetCSS = {
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
-    blinkingContainer: {
-        // width: 100,
-        // height: 100,
-        marginLeft: 8,
-        paddingBottom: 2,
-        paddingRight: 4,
-    },
     lastRow: {
         display: 'flex',
         flexDirection: 'row',
+        marginBottom: 4,
     },
     lastRowChild: {
         marginRight: 4,
+        marginBottom: 0,
     },
 };
 

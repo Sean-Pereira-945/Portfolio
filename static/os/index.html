@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sean Pereira · Showcase 2026</title>
+    <title>Sean Pereira · Full-Stack &amp; ML Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -21,132 +21,165 @@
                 <span class="desktop-icon__label">My Portfolio</span>
             </button>
         </div>
-        <div class="window window--hidden" aria-hidden="true">
+        <div class="window window--hidden" role="region" aria-label="Sean Pereira portfolio" aria-hidden="true">
             <div class="window-bar">
                 <div class="window-bar__left">
-                    <span class="window-icon">SP</span>
-                    <span class="window-title">Sean Pereira – Showcase 2026</span>
+                    <span class="window-icon" aria-hidden="true">SP</span>
+                    <span class="window-title">Sean Pereira — AI / ML Portfolio</span>
                 </div>
                 <div class="window-controls">
-                    <span>_</span>
-                    <span>□</span>
-                    <span>✕</span>
+                    <button type="button" class="window-control" data-window="minimize" aria-label="Minimize window">
+                        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 9.5h8" /></svg>
+                    </button>
+                    <button type="button" class="window-control" data-window="maximize" aria-label="Maximize window" aria-pressed="false">
+                        <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="2" width="8" height="8" /></svg>
+                    </button>
+                    <button type="button" class="window-control window-control--close" data-window="close" aria-label="Close window">
+                        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" /></svg>
+                    </button>
                 </div>
             </div>
             <div class="window-inner">
-                <div class="hero">
-                    <h1>Sean Pereira</h1>
-                    <div class="hero-actions">
-                        <button type="button" class="hero-action" data-go-tab="about">About</button>
-                        <button type="button" class="hero-action" data-go-tab="projects">Projects</button>
-                        <button type="button" class="hero-action" data-go-tab="skills">Skills</button>
-                        <button type="button" class="hero-action" data-go-tab="achievements">Achievements &amp; Certifications</button>
-                        <button type="button" class="hero-action" data-go-tab="contact">Contact</button>
-                        <button type="button" class="hero-action hero-action--primary" data-resume="../seanResume.pdf">Download Resume</button>
-                    </div>
+                <div class="app-statusbar" aria-hidden="true">
+                    <span class="app-statusbar__time" data-clock>9:41</span>
+                    <span class="app-statusbar__icons">
+                        <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
+                        <svg viewBox="0 0 16 12"><path d="M8 11.5 5.6 8.9a3.4 3.4 0 0 1 4.8 0zM3.4 6.6a6.6 6.6 0 0 1 9.2 0l-1.4 1.5a4.6 4.6 0 0 0-6.4 0zM1 4.2a10 10 0 0 1 14 0l-1.4 1.5a8 8 0 0 0-11.2 0z" /></svg>
+                        <svg viewBox="0 0 27 12"><rect x="0.5" y="0.5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" opacity="0.4" /><rect x="2.5" y="2.5" width="17" height="7" rx="1.8" /><rect x="24.8" y="4" width="1.7" height="4" rx="0.8" opacity="0.4" /></svg>
+                    </span>
                 </div>
-                <nav class="tabs tabs--hidden" role="tablist" aria-hidden="true">
-                    <button type="button" class="tab active" data-tab="about" role="tab" aria-selected="true">ABOUT</button>
-                    <button type="button" class="tab" data-tab="experience" role="tab" aria-selected="false">EXPERIENCE</button>
-                    <button type="button" class="tab" data-tab="projects" role="tab" aria-selected="false">PROJECTS</button>
-                    <button type="button" class="tab" data-tab="skills" role="tab" aria-selected="false">SKILLS</button>
-                    <button type="button" class="tab" data-tab="achievements" role="tab" aria-selected="false">ACHIEVEMENTS &amp; CERTIFICATIONS</button>
-                    <button type="button" class="tab" data-tab="contact" role="tab" aria-selected="false">CONTACT</button>
-                </nav>
+                <div class="hero">
+                    <div class="app-header">
+                        <div>
+                            <h1>Sean Pereira</h1>
+                            <p class="app-role">Full-Stack &amp; ML Engineer · Mumbai</p>
+                        </div>
+                        <button type="button" class="app-resume" data-resume="../seanResume.pdf">Resume</button>
+                    </div>
+                    <nav class="hero-actions" aria-label="Portfolio sections">
+                        <button type="button" class="hero-action" data-go-tab="about" aria-controls="panel-about" aria-current="true">About</button>
+                        <button type="button" class="hero-action" data-go-tab="education" aria-controls="panel-education">Education</button>
+                        <button type="button" class="hero-action" data-go-tab="experience" aria-controls="panel-experience">Experience</button>
+                        <button type="button" class="hero-action" data-go-tab="projects" aria-controls="panel-projects">Projects</button>
+                        <button type="button" class="hero-action" data-go-tab="skills" aria-controls="panel-skills">Skills</button>
+                        <button type="button" class="hero-action" data-go-tab="achievements" aria-controls="panel-achievements">Achievements &amp; Certifications</button>
+                        <button type="button" class="hero-action" data-go-tab="contact" aria-controls="panel-contact">Contact</button>
+                        <button type="button" class="hero-action hero-action--primary" data-resume="../seanResume.pdf">Download Resume</button>
+                    </nav>
+                </div>
                 <section class="panel-group">
-                    <article class="panel active" data-panel="about" role="tabpanel">
-                        <p>
-                            Innovative full-stack developer and ML engineer with a strong research foundation in AI/ML
-                            optimization, scalable system architecture, and algorithm development. Passionate about contributing
-                            to cutting-edge research and emerging technologies with a focus on performance optimization and
-                            production-grade delivery.
+                    <article class="panel active" data-panel="about" id="panel-about" tabindex="-1" aria-labelledby="heading-about">
+                        <h2 class="panel-heading panel-heading--desktop-hidden" id="heading-about">About</h2>
+                        <div class="eyebrow">AI / ML Engineer • Full-Stack Developer • Research-Driven Builder</div>
+                        <p class="lead">
+                            I build full-stack products and retrieval-augmented AI systems: EduSphere, a real-time 3D learning
+                            platform built with Three.js and Socket.io, and CancerCare AI, a RAG platform for grounded oncology
+                            support. Computer Engineering at CRCE, Mumbai (CGPA 8.5), and cleared GATE CSE 2026.
                         </p>
+
                         <ul>
-                            <li><span>Education</span> CRCE (B.E. 2027, CGPA 8.68/10) · SVP Junior College (HSC 71.17%) · St. Francis School (ICSE 97.5%).</li>
-                            <li><span>Focus</span> RAG-backed ML systems, resilient backend services, and research-driven product builds.</li>
-                            <li><span>Strengths</span> Performance tuning, system design, and shipping AI-first applications end-to-end.</li>
+                            <li><span>Focus</span> Building AI-powered platforms, retrieval-augmented systems, and maintainable backend infrastructure that scale with real user demand.</li>
+                            <li><span>Strengths</span> Research-oriented problem solving, performance optimization, clear product communication, and shipping polished end-to-end experiences.</li>
                         </ul>
                     </article>
 
-                    <article class="panel" data-panel="experience" role="tabpanel">
+                    <article class="panel" data-panel="education" id="panel-education" tabindex="-1" aria-labelledby="heading-education">
                         <div class="list-block">
-                            <h3>E-Cell IIT Guwahati · Technical Trainee</h3>
-                            <p class="meta">Feb 2024 – Mar 2024</p>
+                            <h2 id="heading-education">Education</h2>
                             <ul>
-                                <li>Completed intensive training in backend architecture, scalable web system design, and AI/ML applications.</li>
-                                <li>Helped improve digital presence for businesses, boosting engagement by 50%+ and revenue by 15%.</li>
-                            </ul>
-                        </div>
-                        <div class="list-block">
-                            <h3>Codelabs CRCE · Documentation Head</h3>
-                            <p class="meta">Mar 2024 – Mar 2025</p>
-                            <ul>
-                                <li>Organized coding contests and seminars while coordinating design and backend teams.</li>
-                                <li>Led placement prep sessions for 150+ students and streamlined event workflows.</li>
-                                <li>Co-designed session content with industry mentors to connect experts and students.</li>
+                                <li><span>Fr. Conceicao Rodrigues College of Engineering (CRCE), Mumbai</span> — B.E. in Computer Engineering, expected May 2027, CGPA 8.5/10.0.</li>
+                                <li><span>Sardar Vallabhbhai Patel Junior College, Mumbai</span> — 12th Grade (HSC), 2023, 71.17%.</li>
+                                <li><span>St. Francis School, Mumbai</span> — 10th Grade (ICSE), 2021, 97.5%.</li>
                             </ul>
                         </div>
                     </article>
 
-                    <article class="panel" data-panel="projects" role="tabpanel">
+                    <article class="panel" data-panel="experience" id="panel-experience" tabindex="-1" aria-labelledby="heading-experience">
+                        <h2 class="panel-heading panel-heading--desktop-hidden" id="heading-experience">Experience</h2>
+                        <div class="list-block">
+                            <h3>Technical Trainee – E-Cell, IIT Guwahati</h3>
+                            <p class="meta">February – March 2024</p>
+                            <ul>
+                                <li>Completed intensive training in backend architecture, scalable web system design, AI/ML applications, and startup ecosystem methodologies.</li>
+                                <li>Helped businesses improve digital presence, increasing user engagement by 50%+ and contributing to 15% revenue growth.</li>
+                            </ul>
+                        </div>
+                        <div class="list-block">
+                            <h3>Documentation Head – Codelabs CRCE</h3>
+                            <p class="meta">March 2024 – March 2025</p>
+                            <ul>
+                                <li>Organized college coding contests and technical seminars and collaborated with design and backend teams for seamless execution.</li>
+                                <li>Led placement preparation sessions for 150+ third-year students and streamlined documentation and event workflows.</li>
+                                <li>Designed session content with industry mentors to connect technical experts and students.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel" data-panel="projects" id="panel-projects" tabindex="-1" aria-labelledby="heading-projects">
+                        <h2 class="panel-heading panel-heading--desktop-hidden" id="heading-projects">Projects</h2>
                         <div class="project">
-                            <h3>CancerCare AI</h3>
-                            <p class="meta">React · Python · FastAPI · RAG · FAISS · PostgreSQL</p>
-                            <p>RAG-powered oncology support platform with hallucination-resistant responses and LLM-as-a-judge safety
-                                evaluation framework.</p>
+                            <h3>
+                                <a href="https://llc-fr-crce-ng3m.vercel.app/" target="_blank" rel="noreferrer">EduSphere – Immersive Collaborative Learning Platform</a>
+                            </h3>
+                            <p class="meta">React.js · Three.js · Node.js · Express.js · MongoDB · Socket.io · JWT · Tailwind CSS · WebGL</p>
+                            <ul>
+                                <li>Developed a responsive full-stack platform serving 200+ students, featuring dual interfaces, JWT authentication, and real-time enrollment analytics.</li>
+                                <li>Architected a full-stack virtual learning hub with multi-user synchronization, real-time message broadcasting, and persistent community data channels using Socket.io and Express.js.</li>
+                                <li>Integrated customized 3D assets and dynamic interactive viewport environments directly into the student landing system using Three.js and WebGL.</li>
+                                <li>Implemented asset optimization including script/model lazy loading and viewport rendering throttling, preserving a consistent 60+ FPS responsive UI across heterogeneous devices.</li>
+                            </ul>
+                        </div>
+                        <div class="project">
+                            <h3>CancerCare AI – RAG-Powered Oncology Support Platform</h3>
+                            <p class="meta">React.js · Python · FastAPI · RAG · FAISS · PostgreSQL · Llama-3.3 · NLP</p>
+                            <ul>
+                                <li>Engineered a clinical NLP platform using Retrieval-Augmented Generation (RAG) for grounded, hallucination-resistant oncology support responses.</li>
+                                <li>Designed an automated processing pipeline for unstructured oncology literature, with text-chunking strategies and dense vector embeddings for low-latency indexed search in FAISS.</li>
+                                <li>Implemented an LLM-as-a-Judge evaluation framework with rigorous safety gating.</li>
+                            </ul>
                         </div>
                         <div class="project">
                             <h3>
-                                <a href="https://github.com/Sean-Pereira-945/DrCropper.ai" target="_blank" rel="noreferrer">DrCropper.ai</a>
+                                <a href="https://github.com/Sean-Pereira-945/DrCropper.ai" target="_blank" rel="noreferrer">DrCropper.ai – AI-Powered Agricultural Health Management Platform</a>
                             </h3>
-                            <p class="meta">Python · CNN · Flask · MongoDB</p>
-                            <p>94% accurate crop health recommender blending soil imagery diagnostics with a farmer-facing support
-                                chatbot.</p>
-                        </div>
-                        <div class="project">
-                            <h3>
-                                <a href="https://llc-fr-crce-ng3m.vercel.app/" target="_blank" rel="noreferrer">LLC@FRCRCE</a>
-                            </h3>
-                            <p class="meta">Node.js · Express · React · MongoDB</p>
-                            <p>Full-stack course management suite for 500+ students featuring JWT-secured dual interfaces, assignment
-                                workflows, and live enrollment analytics.</p>
+                            <p class="meta">Python · Flask · Scikit-learn · HTML/CSS · JavaScript</p>
+                            <p>Engineered a full-stack AI platform for smart farming that delivers crop recommendations based on soil and climate parameters.</p>
                         </div>
                         <div class="project">
                             <h3>
                                 <a href="https://github.com/Sean-Pereira-945/Springboot-project" target="_blank" rel="noreferrer">Beverage Master</a>
                             </h3>
                             <p class="meta">Spring Boot · Hibernate · MySQL</p>
-                            <p>Modular service layer with role-based auth, reusable REST templates, and database migrations built for
-                                rapid enterprise prototyping.</p>
+                            <p>Modular service layer with role-based auth, reusable REST templates, and database migrations built for rapid enterprise prototyping.</p>
                         </div>
                     </article>
 
-                    <article class="panel" data-panel="skills" role="tabpanel">
+                    <article class="panel" data-panel="skills" id="panel-skills" tabindex="-1" aria-labelledby="heading-skills">
                         <div class="list-block">
-                            <h3>Skills Snapshot</h3>
+                            <h2 id="heading-skills">Technical Skills</h2>
                             <ul>
-                                <li>Languages · Python, JavaScript, Java, C, SQL.</li>
-                                <li>Frontend · React, HTML, CSS, JavaScript.</li>
-                                <li>AI/ML · TensorFlow, scikit-learn, NLP (NLTK, spaCy), RAG.</li>
-                                <li>Backend · FastAPI, Flask, Node.js, Express, Spring Boot.</li>
-                                <li>Databases · PostgreSQL, MongoDB, MySQL.</li>
-                                <li>Tools · Git/GitHub, Docker, AWS, Google Cloud, Jupyter, Colab, Figma, PowerBI, Vercel, Linux.</li>
-                                <li>Soft Skills · Problem-Solving, Team Collaboration, Technical Communication, Leadership, Adaptability.</li>
+                                <li>Programming Languages: Python, JavaScript, Java, C, SQL.</li>
+                                <li>Frontend Technologies: React.js, Three.js, HTML, CSS, JavaScript, Tailwind CSS.</li>
+                                <li>AI / Machine Learning: TensorFlow, Scikit-learn, NLP (NLTK, spaCy), RAG.</li>
+                                <li>Backend Frameworks: FastAPI, Flask, Node.js, Express.js, Socket.io, Spring Boot.</li>
+                                <li>Databases: PostgreSQL, MongoDB, MySQL.</li>
+                                <li>Tools &amp; Platforms: Git/GitHub, Docker, AWS, Google Cloud, Jupyter, Colab, Figma, PowerBI, Vercel, Linux.</li>
+                                <li>Soft Skills: Problem-Solving, Team Collaboration, Technical Communication, Leadership, Adaptability.</li>
                             </ul>
                         </div>
                     </article>
 
-                    <article class="panel" data-panel="achievements" role="tabpanel">
+                    <article class="panel" data-panel="achievements" id="panel-achievements" tabindex="-1" aria-label="Achievements and certifications">
                         <div class="list-block">
-                            <h3>Achievements</h3>
+                            <h2>Achievements</h2>
                             <ul>
                                 <li>Cleared GATE CSE 2026.</li>
-                                <li><a href="https://drive.google.com/file/d/11pSRG3c1Tjr3T4N2wtT79Tegv2B0kGzp/view?usp=drive_link" target="_blank" rel="noreferrer">3rd Place · Hackathon 3.0 · IES College of Management &amp; Research (2025)</a>.</li>
+                                <li><a href="https://drive.google.com/file/d/11pSRG3c1Tjr3T4N2wtT79Tegv2B0kGzp/view?usp=drive_link" target="_blank" rel="noreferrer">3rd Place · Hackathon 3.0 · IES College of Management &amp; Research, Bandra (2025)</a>.</li>
                                 <li><a href="https://drive.google.com/file/d/1hCLxsFkaDcMo6NN77GS6dJ5vDvYQ3azv/view?usp=drive_link" target="_blank" rel="noreferrer">Represented college at Avishkar Intercollege Research Convention</a>.</li>
                             </ul>
                         </div>
                         <div class="list-block">
-                            <h3>Certifications</h3>
+                            <h2>Certifications</h2>
                             <ul>
                                 <li><a href="https://drive.google.com/file/d/1H5ZivNqKaIhlhxDbtdLBS1KPMYsGrjKc/view?usp=drive_link" target="_blank" rel="noreferrer">Google Cloud Engineer</a> · Google Skills.</li>
                                 <li><a href="https://drive.google.com/file/d/1whErPAg0Yc8hC8cgExUQUNak6QG7YnKg/view?usp=drive_link" target="_blank" rel="noreferrer">AWS Cloud Practitioner</a> · AWS Academy.</li>
@@ -158,33 +191,53 @@
                         </div>
                     </article>
 
-                    <article class="panel" data-panel="contact" role="tabpanel">
+                    <article class="panel" data-panel="contact" id="panel-contact" tabindex="-1" aria-label="Contact">
                         <div class="contact-grid">
                             <div>
-                                <h3>Reach Out</h3>
+                                <h2>Reach Out</h2>
                                 <ul>
                                     <li>Email · <a href="mailto:seanpereira945@gmail.com">seanpereira945@gmail.com</a></li>
-                                    <li>Phone · <a href="tel:+919769791773">+91 97697 91773</a></li>
+                                    <li>Phone · <a href="tel:+919769791773">+91-9769791773</a></li>
+                                    <li><a href="https://www.linkedin.com/in/sean-pereira-8aa29b2ab/" target="_blank" rel="noreferrer">LinkedIn</a></li>
+                                    <li><a href="https://github.com/Sean-Pereira-945" target="_blank" rel="noreferrer">GitHub</a></li>
                                     <li>Location · Mumbai, India</li>
                                 </ul>
-                                <div class="links">
-                                    <a href="https://www.linkedin.com/in/sean-pereira-8aa29b2ab/" target="_blank" rel="noreferrer">LinkedIn</a>
-                                    <a href="https://github.com/Sean-Pereira-945" target="_blank" rel="noreferrer">GitHub</a>
-                                    <a href="../seanResume.pdf" target="_blank" rel="noreferrer">Resume</a>
-                                </div>
                             </div>
                             <div>
-                                <h3>Collaboration Notes</h3>
+                                <h2>Collaboration Notes</h2>
                                 <ul>
                                     <li>Open to AI/ML research partnerships and backend optimization mandates.</li>
-                                    <li>Comfortable presenting findings to leadership &amp; mentoring student teams.</li>
+                                    <li>Comfortable presenting findings to leadership and mentoring student teams.</li>
                                     <li>Blend of research rigor and shipping velocity for AI-first products.</li>
                                 </ul>
                             </div>
                         </div>
                     </article>
                 </section>
+                <nav class="app-tabbar" aria-label="App sections">
+                    <button type="button" class="app-tab" data-app-tab="home" aria-current="true">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z" /></svg>
+                        <span>Home</span>
+                    </button>
+                    <button type="button" class="app-tab" data-app-tab="work">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12.5" rx="2" /><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17" /></svg>
+                        <span>Work</span>
+                    </button>
+                    <button type="button" class="app-tab" data-app-tab="projects">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5" /><rect x="13.5" y="3.5" width="7" height="7" rx="1.5" /><rect x="3.5" y="13.5" width="7" height="7" rx="1.5" /><rect x="13.5" y="13.5" width="7" height="7" rx="1.5" /></svg>
+                        <span>Projects</span>
+                    </button>
+                    <button type="button" class="app-tab" data-app-tab="skills">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.5 5.2 5.7.8-4.1 4 1 5.7L12 16.5l-5.1 2.7 1-5.7-4.1-4 5.7-.8z" /></svg>
+                        <span>Skills</span>
+                    </button>
+                    <button type="button" class="app-tab" data-app-tab="contact">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+                        <span>Contact</span>
+                    </button>
+                </nav>
             </div>
+            <div class="app-home-indicator" aria-hidden="true"></div>
             <div class="window-footer">© 2026 Sean Pereira</div>
         </div>
     </div>

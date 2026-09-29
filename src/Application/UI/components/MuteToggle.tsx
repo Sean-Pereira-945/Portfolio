@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import UIEventBus from '../EventBus';
 import { Easing } from '../Animation';
@@ -14,50 +14,47 @@ const MuteToggle: React.FC<MuteToggleProps> = ({}) => {
     const [isActive, setIsActive] = useState(false);
     const [muted, setMuted] = useState(false);
 
-    const onMouseDownHandler = useCallback(
-        (event) => {
-            setIsActive(true);
-            event.preventDefault();
-            setMuted(!muted);
-        },
-        [muted]
-    );
-
-    const onMouseUpHandler = useCallback(() => {
-        setIsActive(false);
-    }, []);
-
     useEffect(() => {
         UIEventBus.dispatch('muteToggle', muted);
     }, [muted]);
 
     return (
-        <div
+        <button
+            type="button"
             onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
+            onMouseLeave={() => {
+                setIsHovering(false);
+                setIsActive(false);
+            }}
+            onMouseDown={(event) => {
+                // Keep the scene from treating this press as a camera click.
+                event.preventDefault();
+                setIsActive(true);
+            }}
+            onMouseUp={() => setIsActive(false)}
+            onClick={() => setMuted(!muted)}
             style={styles.container}
-            onMouseDown={onMouseDownHandler}
-            onMouseUp={onMouseUpHandler}
             className="icon-control-container"
-            id="prevent-click"
+            data-ui-control
+            aria-label="Mute sound"
+            aria-pressed={muted}
         >
             <motion.img
-                id="prevent-click"
                 src={muted ? volumeOff : volumeOn}
+                alt=""
+                className="icon-control-image icon-mute"
                 style={{ opacity: isActive ? 0.2 : isHovering ? 0.8 : 1 }}
-                width={window.innerWidth < 768 ? 8 : 10}
                 animate={
                     isActive ? 'active' : isHovering ? 'hovering' : 'default'
                 }
                 variants={iconVars}
             />
-        </div>
+        </button>
     );
 };
 
 const iconVars = {
     hovering: {
-        // scale: 1.2,
         opacity: 0.8,
         transition: {
             duration: 0.1,
@@ -84,13 +81,11 @@ const iconVars = {
 
 const styles: StyleSheetCSS = {
     container: {
-        background: 'black',
-        // padding: 4,
-        // paddingLeft: 8,
-        // paddingRight: 8,
+        background: 'var(--bios-bg)',
+        border: 0,
+        padding: 0,
         textAlign: 'center',
         display: 'flex',
-        // position: 'absolute',
         boxSizing: 'border-box',
         justifyContent: 'center',
         alignItems: 'center',

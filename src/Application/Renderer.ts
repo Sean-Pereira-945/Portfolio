@@ -61,7 +61,9 @@ export default class Renderer {
 
         document.querySelector('#webgl')?.appendChild(this.instance.domElement);
 
+        // The film-grain overlay is 12% opacity, so render it at 1x density to save fill rate.
         this.overlayInstance = new THREE.WebGLRenderer();
+        this.overlayInstance.setPixelRatio(1);
         this.overlayInstance.setSize(this.sizes.width, this.sizes.height);
         this.overlayInstance.domElement.style.position = 'absolute';
         this.overlayInstance.domElement.style.top = '0px';
@@ -109,7 +111,6 @@ export default class Renderer {
         this.cssInstance.setSize(this.sizes.width, this.sizes.height);
 
         this.overlayInstance.setSize(this.sizes.width, this.sizes.height);
-        this.overlayInstance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
     }
 
     update() {

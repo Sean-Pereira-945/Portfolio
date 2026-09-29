@@ -33,8 +33,17 @@ body {
         left: 24px;
     }
 
+    /* Touch-sized hit area */
     .icon-control-container {
-        height: 19.5px;
-        width: 19.5px;
+        height: 44px;
+        min-width: 44px;
+        width: auto;
     }
+}
+
+/* Phone mode: studio backdrop behind the 3D phone */
+body.phone-mode {
+    /* Every child is absolutely positioned, so give the body real height to paint on. */
+    min-height: 100vh;
+    background: #03090e radial-gradient(ellipse 70% 55% at 50% 45%, #1b3448 0%, #0a1824 55%, #03090e 100%) fixed no-repeat;
 }

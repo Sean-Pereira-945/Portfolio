@@ -14,3 +14,9 @@ export const Easing: { [key in AnimationEasing]: number[] } = {
     expOut: [0.05, 0.7, 0.1, 1],
     expInOut: [0.9, 0.05, 0.1, 1],
 };
+
+// True when the visitor has asked their OS for less motion.
+export const prefersReducedMotion = () =>
+    typeof window !== 'undefined' &&
+    !!window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;

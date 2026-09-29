@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Application from '../Application';
-import Camera from '../Camera/Camera';
+import Camera, { isUIControl } from '../Camera/Camera';
 import Sizes from '../Utils/Sizes';
 
 const RENDER_WIREFRAME = false;
@@ -36,6 +36,7 @@ export default class Hitboxes {
             'mousedown',
             (event) => {
                 if (!this.camera?.instance) return;
+                if (isUIControl(event.target)) return;
                 if (
                     typeof event.clientX !== 'number' ||
                     typeof event.clientY !== 'number'

@@ -7,6 +7,8 @@ import TWEEN from '@tweenjs/tween.js';
 import Renderer from '../Renderer';
 import Resources from '../Utils/Resources';
 import UIEventBus from '../UI/EventBus';
+import { prefersReducedMotion } from '../UI/Animation';
+import { isPhoneMode, PHONE_BODY, PHONE_OUTER } from '../Utils/Device';
 import Time from '../Utils/Time';
 import BezierEasing from 'bezier-easing';
 import {
@@ -67,9 +69,11 @@ export default class Camera extends EventEmitter {
         };
 
         document.addEventListener('mousedown', (event) => {
+            // Phone mode has no desk to zoom to, and the app needs normal presses.
+            if (isPhoneMode) return;
             event.preventDefault();
-            // @ts-ignore
-            if (event.target.id === 'prevent-click') return;
+            // Presses on the on-screen controls are not camera clicks.
+            if (isUIControl(event.target)) return;
             // print target and current keyframe
             if (
                 this.currentKeyframe === CameraKey.IDLE ||
@@ -97,6 +101,9 @@ export default class Camera extends EventEmitter {
         callback?: () => void
     ) {
         if (this.currentKeyframe === key) return;
+
+        // Reduced motion: cut straight to the new view instead of flying there.
+        if (prefersReducedMotion()) duration = 0;
 
         if (this.targetKeyframe) TWEEN.removeAll();
 
@@ -147,6 +154,32 @@ export default class Camera extends EventEmitter {
             this.transition(CameraKey.DESK);
             UIEventBus.dispatch('leftMonitor', {});
         });
+
+        // Keyboard and touch paths into and out of the monitor.
+        UIEventBus.on('requestEnterMonitor', () => {
+            this.trigger('enterMonitor');
+            const screen = document.getElementById('computer-screen');
+            if (screen) screen.focus({ preventScroll: true });
+        });
+        UIEventBus.on('requestLeaveMonitor', () => this.leaveMonitor());
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') this.leaveMonitor();
+        });
+    }
+
+    isInMonitor() {
+        return (
+            this.currentKeyframe === CameraKey.MONITOR ||
+            this.targetKeyframe === CameraKey.MONITOR
+        );
+    }
+
+    leaveMonitor() {
+        if (!this.isInMonitor()) return;
+        this.trigger('leftMonitor');
+        // Hand focus back to the page so Tab reaches the scene controls again.
+        const active = document.activeElement as HTMLElement | null;
+        if (active && active.id === 'computer-screen') active.blur();
     }
 
     setFreeCamListeners() {
@@ -182,6 +215,7 @@ export default class Camera extends EventEmitter {
     }
 
     setPostLoadTransition() {
+        if (isPhoneMode) return;
         UIEventBus.on('loadingScreenDone', () => {
             this.transition(CameraKey.IDLE, 2500, TWEEN.Easing.Exponential.Out);
         });
@@ -215,8 +249,25 @@ export default class Camera extends EventEmitter {
         this.orbitControls.update();
     }
 
+    /** Frame the phone so it fills most of the viewport, whatever its shape. */
+    fitPhone() {
+        const halfFov = THREE.MathUtils.degToRad(this.instance.fov) / 2;
+        const aspect = this.sizes.width / this.sizes.height;
+        const byHeight = PHONE_OUTER.h / 0.84 / (2 * Math.tan(halfFov));
+        const byWidth =
+            PHONE_OUTER.w / 0.9 / (2 * Math.tan(halfFov) * aspect);
+        const distance = Math.max(byHeight, byWidth) + PHONE_BODY.depth / 2;
+        this.instance.position.set(0, 0, distance);
+        this.instance.lookAt(0, 0, 0);
+    }
+
     update() {
         TWEEN.update();
+
+        if (isPhoneMode) {
+            this.fitPhone();
+            return;
+        }
 
         if (this.freeCam && this.orbitControls) {
             this.position.copy(this.orbitControls.object.position);
@@ -240,3 +291,7 @@ export default class Camera extends EventEmitter {
         this.instance.lookAt(this.focalPoint);
     }
 }
+
+export const isUIControl = (target: EventTarget | null) =>
+    target instanceof Element &&
+    !!target.closest('[data-ui-control], #prevent-click');

@@ -1,33 +1,83 @@
 :root {
     font-size: 62.5%;
-    --desktop: #1c7c81;
-    --window: #f7f4ee;
-    --window-border: #0d3e6c;
-    --window-bar: #0c3b67;
-    --window-bar-text: #f7f4ee;
-    --accent: #5337a5;
-    --text: #1c1d24;
-    --subtext: #4c4d57;
-    --tab-border: #a7a5a0;
+    --desktop-1: #07141e;
+    --desktop-2: #0d1d2b;
+    --desktop-3: #102b39;
+    --desktop-text: #f7f4ee;
+    --window: #f7f3ee;
+    --window-border: #132a3d;
+    --window-bar: #0d1d2b;
+    --window-bar-text: #edf3f6;
+    --ink: #0d3e6c;
+    --accent: #7c5cff;
+    /* Accent dark enough for text: 5.7:1 on the window surface */
+    --accent-text: #5b3fe0;
+    --accent-2: #4cc9f0;
+    --text: #101826;
+    --body-text: #2d2f38;
+    --subtext: #465269;
+    --tab-border: #6a7a88;
+    --focus-ring: #5b3fe0;
+    --font-sans: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-display: 'DM Serif Display', serif;
 }
 
 * {
     box-sizing: border-box;
 }
 
+::selection {
+    background: var(--accent-text);
+    color: #fff;
+}
+
 html {
     height: 100%;
-    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 60%), var(--desktop);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(76, 201, 240, 0.22), transparent 20%),
+        radial-gradient(circle at 80% 18%, rgba(124, 92, 255, 0.18), transparent 22%),
+        linear-gradient(135deg, var(--desktop-1), var(--desktop-2) 35%, var(--desktop-3));
 }
 
 body {
     margin: 0;
-    font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 60%), var(--desktop);
+    font-family: var(--font-sans);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(76, 201, 240, 0.22), transparent 20%),
+        radial-gradient(circle at 80% 18%, rgba(124, 92, 255, 0.18), transparent 22%),
+        linear-gradient(135deg, var(--desktop-1), var(--desktop-2) 35%, var(--desktop-3));
     min-height: 100vh;
     height: 100%;
     overflow: hidden;
     color: var(--text);
+}
+
+button {
+    font-family: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+.panel:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+}
+
+.panel:focus {
+    outline: none;
+}
+
+.sr-only,
+.panel-heading--desktop-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .desktop-shell {
@@ -40,12 +90,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
-        linear-gradient(225deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
-        linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
-        linear-gradient(315deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%);
-    background-size: 40px 40px;
-    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    background-image:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+        linear-gradient(225deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+        linear-gradient(315deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%);
+    background-size: 38px 38px;
+    background-position: 0 0, 0 19px, 19px -19px, -19px 0px;
 }
 
 .desktop-icons {
@@ -61,14 +112,14 @@ body {
 .desktop-icon {
     border: 0;
     background: transparent;
-    color: #f7f4ee;
+    color: var(--desktop-text);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
+    padding: 0.4rem;
     cursor: pointer;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    font-family: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', sans-serif;
     font-size: 1.2rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -79,45 +130,53 @@ body {
     height: 48px;
     border-radius: 10px;
     background: linear-gradient(140deg, #f7f4ee, #d0cbc2);
-    border: 2px solid #0d3e6c;
-    color: #0d3e6c;
+    border: 2px solid var(--ink);
+    color: var(--ink);
     font-weight: 700;
     display: grid;
     place-items: center;
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--font-display);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
 }
 
 .desktop-icon:focus-visible {
-    outline: 2px solid #f7f4ee;
+    outline: 2px solid var(--desktop-text);
     outline-offset: 4px;
 }
 
 .window {
-    max-width: 920px;
+    max-width: 960px;
+    width: 100%;
     margin: 0 auto;
-    border: 4px solid var(--window-border);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 32px 80px rgba(1, 8, 16, 0.72);
     background: var(--window);
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+    min-height: 0;
     overflow: hidden;
+    border-radius: 16px;
 }
 
 .window--hidden {
     display: none;
 }
 
+.window--maximized {
+    max-width: none;
+}
+
 .window-bar {
-    background: var(--window-bar);
+    background: linear-gradient(90deg, #081922 0%, #102a3b 45%, var(--window-bar) 100%);
     color: var(--window-bar-text);
-    padding: 0.6rem 1.2rem;
+    padding: 0.4rem 0.6rem 0.4rem 1.3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 1.2rem;
     letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .window-bar__left {
@@ -132,29 +191,92 @@ body {
     font-weight: 700;
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--font-display);
 }
 
-.window-controls span {
-    display: inline-block;
-    margin-left: 0.8rem;
-    padding: 0 0.4rem;
+.window-controls {
+    display: flex;
+    gap: 0.2rem;
 }
 
+.window-control {
+    width: 32px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--window-bar-text);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.window-control svg {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+}
+
+.window-control:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.window-control--close:hover {
+    background: #c42b1c;
+}
+
+.window-control:focus-visible {
+    outline-color: var(--window-bar-text);
+    outline-offset: -2px;
+}
+
+/* Only the panel scrolls on desktop, so the name and section nav stay put. */
 .window-inner {
     padding: clamp(2rem, 4vw, 3.6rem);
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
     flex: 1 1 auto;
-    overflow-y: auto;
+    min-height: 0;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(76, 201, 240, 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(247, 243, 238, 0.96), rgba(244, 240, 234, 0.98));
 }
 
 .hero h1 {
     margin: 0;
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(3.6rem, 6vw, 5.2rem);
+    font-family: var(--font-sans);
+    font-size: clamp(3.2rem, 5vw, 4.6rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+}
+
+.eyebrow {
+    display: inline-block;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(83, 55, 165, 0.08);
+    border: 1px solid rgba(83, 55, 165, 0.22);
+    color: var(--accent-text);
+    font-size: 1.3rem;
+    font-weight: 600;
     letter-spacing: 0.02em;
+}
+
+.lead {
+    margin: 0;
+    max-width: 68ch;
+    font-size: 1.72rem;
+    line-height: 1.7;
+    color: var(--body-text);
 }
 
 .hero-actions {
@@ -170,6 +292,7 @@ body {
     color: var(--window-border);
     font-weight: 600;
     letter-spacing: 0.08em;
+    min-height: 40px;
     padding: 0.8rem 1.6rem;
     cursor: pointer;
     text-transform: uppercase;
@@ -182,58 +305,38 @@ body {
     transform: translateY(-2px);
 }
 
-.hero-action--primary {
+.hero-action[aria-current='true'] {
     background: var(--window-border);
     color: var(--window-bar-text);
-    border-color: var(--window-border);
+}
+
+.hero-action--primary {
+    background: linear-gradient(135deg, #132a3d, #2a3c5f 52%, var(--accent-text));
+    color: var(--window-bar-text);
+    border-color: transparent;
+    box-shadow: 0 10px 20px rgba(124, 92, 255, 0.18);
 }
 
 .hero-action--primary:hover,
 .hero-action--primary:focus-visible {
-    background: var(--window-bar);
-}
-
-.tabs {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.tabs--hidden {
-    display: none;
-}
-
-.tab {
-    background: #fff;
-    border: 2px solid var(--tab-border);
-    border-bottom: 4px solid var(--tab-border);
-    padding: 0.6rem 1.6rem;
-    font-size: 1.2rem;
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    background-image: linear-gradient(180deg, #ffffff 0%, #ece9e1 100%);
-}
-
-.tab.active {
-    border-color: var(--window-border);
-    color: var(--window-border);
-    font-weight: 600;
+    background: linear-gradient(135deg, #0e1d2d, #213a59 52%, #4c33c4);
 }
 
 .panel-group {
-    border: 2px solid var(--tab-border);
-    background: #fff;
+    border: 1px solid rgba(19, 42, 61, 0.2);
+    background: rgba(255, 255, 255, 0.82);
     padding: 2rem;
-    min-height: 260px;
     flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
+    border-radius: 16px;
 }
 
 .panel {
     display: none;
     flex-direction: column;
     gap: 1rem;
-    font-size: 1.6rem;
+    font-size: 1.72rem;
     line-height: 1.7;
     color: var(--subtext);
 }
@@ -248,7 +351,9 @@ body {
 }
 
 .panel li {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
+    font-size: 1.72rem;
+    line-height: 1.7;
 }
 
 .panel span {
@@ -256,22 +361,24 @@ body {
     color: var(--text);
 }
 
-.list-block h3 {
+.panel h2,
+.panel h3 {
     margin: 0;
     font-size: 1.6rem;
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    color: var(--text);
+}
+
+.list-block + .list-block,
+.project + .project {
+    margin-top: 1.2rem;
 }
 
 .list-block .meta {
     color: var(--subtext);
     font-size: 1.2rem;
     margin: 0.2rem 0 0.6rem;
-}
-
-.project h3 {
-    margin: 0;
-    font-size: 1.6rem;
-    font-family: 'DM Serif Display', serif;
 }
 
 .project h3 a {
@@ -282,14 +389,23 @@ body {
 .project h3 a:hover,
 .project h3 a:focus-visible {
     text-decoration: underline;
+    text-underline-offset: 0.2em;
 }
 
 .project .meta {
     font-size: 1.4rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: var(--accent-text);
+    margin: 0.2rem 0 0.4rem;
+}
+
+.project p {
+    margin: 0;
+}
+
+.panel a {
+    color: var(--accent-text);
+    text-underline-offset: 0.2em;
 }
 
 .contact-grid {
@@ -307,7 +423,7 @@ body {
 }
 
 .contact-grid a {
-    color: var(--accent);
+    color: var(--accent-text);
     text-decoration: none;
     font-weight: 500;
 }
@@ -316,62 +432,23 @@ body {
     text-decoration: underline;
 }
 
-.contact-grid .links {
-    display: flex;
-    gap: 1.2rem;
-    margin-top: 0.8rem;
-}
-
 .window-footer {
     border-top: 2px solid var(--tab-border);
     padding: 0.6rem 1.2rem;
     font-size: 1.1rem;
-}
-
-.taskbar {
-    margin-top: clamp(2rem, 4vw, 3rem);
-    background: #d9d7cd;
-    border: 3px solid #8c8a83;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.4rem 0.8rem;
-}
-
-.start {
-    background: linear-gradient(180deg, #fefefe 0%, #d3d1c7 100%);
-    border: 2px solid #6f6d66;
-    padding: 0.4rem 1.4rem;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.task {
-    flex: 1;
-    border: 2px solid #a19f99;
-    background: #f7f4ee;
-    padding: 0.4rem 0.8rem;
-    font-size: 1.2rem;
-}
-
-.clock {
-    min-width: 90px;
-    text-align: right;
-    font-size: 1.2rem;
+    background: var(--window);
 }
 
 @media (max-width: 640px) {
+    /* The hero is tall on phones, so let the whole window scroll instead of a tiny panel. */
+    .window-inner {
+        overflow-y: auto;
+    }
+
     .panel-group {
+        flex: 0 0 auto;
+        overflow: visible;
         padding: 1.2rem;
-    }
-
-    .tabs {
-        gap: 0.6rem;
-    }
-
-    .tab {
-        flex: 1 1 calc(50% - 0.6rem);
-        text-align: center;
     }
 
     .hero-actions {
@@ -380,6 +457,288 @@ body {
 
     .hero-action {
         flex: 1 1 calc(50% - 0.6rem);
+        min-height: 44px;
         text-align: center;
+    }
+}
+
+/* ---------------------------------------------------------------
+   Phone app layout
+   Used inside the 3D phone (html.in-phone) and on phone-sized screens.
+   --------------------------------------------------------------- */
+
+.app-statusbar,
+.app-header .app-role,
+.app-resume,
+.app-tabbar,
+.app-home-indicator {
+    display: none;
+}
+
+.app-header {
+    display: block;
+}
+
+html.app-mode,
+html.app-mode body {
+    background: var(--window);
+}
+
+.app-mode .desktop-shell {
+    padding: 0;
+    background: var(--window);
+}
+
+.app-mode .desktop-icons,
+.app-mode .window-bar,
+.app-mode .window-footer,
+.app-mode .hero-actions {
+    display: none;
+}
+
+.app-mode .window,
+.app-mode .window.window--hidden {
+    display: flex;
+    position: relative;
+    max-width: none;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.app-mode .window-inner {
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+    background: var(--window);
+}
+
+.app-mode .app-statusbar {
+    display: none;
+}
+
+/* The real phone draws its own status bar; the 3D phone needs one. */
+.in-phone .app-statusbar {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 6px 30px 0 36px;
+    color: var(--text);
+}
+
+.app-statusbar__time {
+    font-size: 1.6rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+}
+
+.app-statusbar__icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.app-statusbar__icons svg {
+    height: 11px;
+    width: auto;
+    fill: currentColor;
+}
+
+.app-mode .hero {
+    flex: 0 0 auto;
+    padding: 10px 20px 14px;
+    border-bottom: 1px solid rgba(19, 42, 61, 0.1);
+}
+
+.app-mode .app-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.app-mode .hero h1 {
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+}
+
+.app-mode .app-header .app-role {
+    display: block;
+    margin: 0.4rem 0 0;
+    font-size: 1.4rem;
+    color: var(--subtext);
+}
+
+.app-mode .app-resume {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 36px;
+    margin-top: 2px;
+    padding: 0 1.4rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--window-border);
+    color: var(--window-bar-text);
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.app-mode .app-resume:active {
+    background: var(--accent-text);
+}
+
+.app-mode .panel-group {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    /* Phone apps don't show a desktop scrollbar; content still scrolls by touch or wheel. */
+    scrollbar-width: none;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 16px 20px 28px;
+}
+
+.app-mode .panel-group::-webkit-scrollbar,
+.app-mode .window-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.app-mode .window-inner {
+    scrollbar-width: none;
+}
+
+.app-mode .panel.active {
+    display: flex;
+}
+
+.app-mode .panel + .panel.active {
+    margin-top: 2.4rem;
+}
+
+.app-mode .panel,
+.app-mode .panel li,
+.app-mode .lead {
+    font-size: 1.55rem;
+    line-height: 1.6;
+}
+
+.app-mode .panel-heading--desktop-hidden {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+.app-mode .panel h2 {
+    font-size: 1.9rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+}
+
+.app-mode .panel h3 {
+    font-size: 1.6rem;
+}
+
+.app-mode .project .meta {
+    font-size: 1.3rem;
+    line-height: 1.5;
+}
+
+.app-mode .contact-grid {
+    grid-template-columns: 1fr;
+    font-size: 1.55rem;
+}
+
+.app-mode .contact-grid li {
+    overflow-wrap: anywhere;
+}
+
+.app-mode .app-tabbar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    flex: 0 0 auto;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(19, 42, 61, 0.12);
+    background: #fbf9f5;
+}
+
+/* Leave room for the home indicator drawn on the 3D phone */
+.in-phone .app-tabbar {
+    padding-bottom: 28px;
+}
+
+.app-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    min-height: 48px;
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: var(--subtext);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-tab svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.app-tab[aria-current='true'] {
+    color: var(--accent-text);
+}
+
+.app-tab[aria-current='true'] svg {
+    fill: rgba(91, 63, 224, 0.12);
+}
+
+.app-tab:focus-visible {
+    outline-offset: -2px;
+    border-radius: 10px;
+}
+
+.in-phone .app-home-indicator {
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 134px;
+    height: 5px;
+    margin-left: -67px;
+    border-radius: 3px;
+    background: var(--text);
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-action,
+    .window-control {
+        transition: none;
+    }
+
+    .hero-action:hover,
+    .hero-action:focus-visible {
+        transform: none;
     }
 }
