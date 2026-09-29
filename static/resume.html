@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean Pereira · Resume</title>
+    <link rel="icon" href="./images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-bg: #e9e5de;
+            --bar: #0d1d2b;
+            --bar-text: #edf3f6;
+            --ink: #0d3e6c;
+            --text: #101826;
+            --subtext: #465269;
+            --accent-text: #5b3fe0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--page-bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        }
+
+        ::selection {
+            background: var(--accent-text);
+            color: #fff;
+        }
+
+        .bar {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 16px;
+            background: var(--bar);
+            color: var(--bar-text);
+        }
+
+        .bar h1 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .bar__actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .bar a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 36px;
+            padding: 0 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--bar-text);
+            border: 1px solid rgba(237, 243, 246, 0.35);
+        }
+
+        .bar a.primary {
+            background: var(--bar-text);
+            color: var(--bar);
+            border-color: transparent;
+        }
+
+        .bar a:hover {
+            border-color: var(--bar-text);
+        }
+
+        .bar a:focus-visible {
+            outline: 2px solid var(--bar-text);
+            outline-offset: 2px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 24px 16px 48px;
+        }
+
+        .page {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(13, 29, 43, 0.18);
+        }
+
+        .page canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .page a.pdf-link {
+            position: absolute;
+            display: block;
+        }
+
+        .page a.pdf-link:focus-visible {
+            outline: 2px solid var(--accent-text);
+        }
+
+        .status {
+            margin: 40px 0;
+            font-size: 15px;
+            color: var(--subtext);
+            text-align: center;
+        }
+
+        .status a {
+            color: var(--accent-text);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bar">
+        <h1>Sean Pereira · Resume</h1>
+        <div class="bar__actions">
+            <a href="./SeanPereiraResume.pdf" target="_blank" rel="noopener">Open PDF</a>
+            <a class="primary" href="./SeanPereiraResume.pdf" download="SeanPereiraResume.pdf">Download</a>
+        </div>
+    </header>
+
+    <main id="pages" aria-live="polite">
+        <p class="status" id="status">Loading resume…</p>
+    </main>
+
+    <script type="module">
+        // Draws the PDF with PDF.js so it shows even when the browser is set to
+        // download PDFs instead of opening them.
+        const PDF_URL = './SeanPereiraResume.pdf';
+        const PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build';
+
+        const pagesEl = document.getElementById('pages');
+        const statusEl = document.getElementById('status');
+
+        const showFallback = () => {
+            statusEl.innerHTML =
+                'The resume viewer could not load. <a href="' + PDF_URL + '" download>Download the PDF</a> instead.';
+        };
+
+        let pdfDoc = null;
+
+        const renderAll = async () => {
+            const width = Math.min(pagesEl.clientWidth - 32, 900);
+            const ratio = Math.min(window.devicePixelRatio || 1, 3);
+            const pages = [];
+
+            for (let n = 1; n <= pdfDoc.numPages; n++) {
+                const page = await pdfDoc.getPage(n);
+                const base = page.getViewport({ scale: 1 });
+                const viewport = page.getViewport({ scale: width / base.width });
+                const hiRes = page.getViewport({ scale: (width / base.width) * ratio });
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'page';
+                wrapper.setAttribute('aria-label', `Resume page ${n} of ${pdfDoc.numPages}`);
+
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.floor(hiRes.width);
+                canvas.height = Math.floor(hiRes.height);
+                canvas.setAttribute('role', 'img');
+                canvas.setAttribute('aria-label', `Resume page ${n}`);
+                wrapper.appendChild(canvas);
+
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport: hiRes }).promise;
+
+                // Keep the resume's own links (LinkedIn, GitHub, email…) clickable.
+                const annotations = await page.getAnnotations();
+                annotations
+                    .filter((a) => a.subtype === 'Link' && a.url)
+                    .forEach((a) => {
+                        const [x1, y1, x2, y2] = viewport.convertToViewportRectangle(a.rect);
+                        const link = document.createElement('a');
+                        link.className = 'pdf-link';
+                        link.href = a.url;
+                        link.target = '_blank';
+                        link.rel = 'noopener';
+                        link.setAttribute('aria-label', a.url.replace(/^mailto:/, 'Email '));
+                        link.style.left = `${(Math.min(x1, x2) / viewport.width) * 100}%`;
+                        link.style.top = `${(Math.min(y1, y2) / viewport.height) * 100}%`;
+                        link.style.width = `${(Math.abs(x2 - x1) / viewport.width) * 100}%`;
+                        link.style.height = `${(Math.abs(y2 - y1) / viewport.height) * 100}%`;
+                        wrapper.appendChild(link);
+                    });
+
+                pages.push(wrapper);
+            }
+
+            pagesEl.replaceChildren(...pages);
+        };
+
+        try {
+            const pdfjsLib = await import(`${PDFJS}/pdf.min.mjs`);
+            pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS}/pdf.worker.min.mjs`;
+            pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
+            await renderAll();
+
+            // Re-draw sharply when the window size changes a lot (e.g. phone rotation).
+            let lastWidth = pagesEl.clientWidth;
+            let timer;
+            window.addEventListener('resize', () => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    if (Math.abs(pagesEl.clientWidth - lastWidth) > 40) {
+                        lastWidth = pagesEl.clientWidth;
+                        renderAll();
+                    }
+                }, 200);
+            });
+        } catch (error) {
+            console.error(error);
+            showFallback();
+        }
+    </script>
+</body>
+
+</html>
